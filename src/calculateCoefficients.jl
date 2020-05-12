@@ -1,0 +1,21 @@
+# Purpose: To take airfoil coordinates and use XFOIL to generate coefficient data for it
+
+# include("Desktop/FLOW Lab/Strip Theory/calculateCoefficients.jl")
+
+using Pkg
+Pkg.clone("Xfoil.jl")
+import Xfoil
+
+function calculateCoefficients(chordwiseCoordinates,thicknessCoordinates, angle, reynoldsNumber)
+
+    angle = angle*180/pi # Converting to degrees
+
+    Xfoil.setCoordinates(chordwiseCoordinates,thicknessCoordinates)
+
+    cl, cdd, cdp, cm, converged = Xfoil.solveAlpha(angle,reynoldsNumber)
+
+    #println("Angle = ",angle,", Reynolds Number = ",reynoldsNumber," -> cl = ",cl)
+
+    return cl[1], cdd[1], cdp[1], cm[1], converged[1]
+
+end
