@@ -6,7 +6,7 @@ Pkg.add(PackageSpec(path="/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositorie
 #import makeNACA.naca
 import NonlinearLiftingLine.NLL
 
-VLM_path = "/Users/markanderson/Box/FLOW Lab/Modules MCA/VortexLatticeMethod/src/"
+VLM_path = "/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/VortexLatticeMethod/src/"
 
 include(string(VLM_path,"generatePanels.jl"))
 
