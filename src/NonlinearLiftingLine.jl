@@ -77,7 +77,7 @@ module NonlinearLiftingLine
             
             # find the total circulation
             for j = 1:(numPanels)
-                
+
                 # accounting for the difference velocity at each airfoil
                 localVelocity = sqrt(freestream[j]^2 + inducedVelocity[j]^2)
                 chord = panels[j,10] - panels[j,1]
@@ -132,7 +132,7 @@ module NonlinearLiftingLine
 
         # Getting the results from the nonlinear solver
         CL, _, _ = calculateLift(density,freestream,panels,GammaValues); # Lift
-        CDi_near, _, _ = calculateInducedDrag(density,freestream,panels,GammaValues,Cl); # Near-field induced drag
+        CDi_near, _, _ = calculateInducedDrag(density,freestream,panels,GammaValues,cl); # Near-field induced drag
 
         CL, cl_VLM, cLSpanLocations_VLM = calculateLift(density,freestream,panels,GammaValues_VLM); # Lift
 
