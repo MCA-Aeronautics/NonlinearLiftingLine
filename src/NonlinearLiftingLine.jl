@@ -91,8 +91,8 @@ module NonlinearLiftingLine
                 localReynoldsNumber = localVelocity * chord / nu
 
                 # Calculate the lift and drag coefficients for that angle for each airfoil
-                # cl[j], cdd[j], cdp[j], cm[j], converged[j] = calculateCoefficients(airfoil[:,1],airfoil[:,2], effectiveAOA[j], localReynoldsNumber/chord);
-                cl[j] = 2*pi*effectiveAOA[j]
+                cl[j], cdd[j], cdp[j], cm[j], converged[j] = calculateCoefficients(airfoil[:,1],airfoil[:,2], effectiveAOA[j], localReynoldsNumber/chord);
+                # cl[j] = 2*pi*effectiveAOA[j]
 
                 # Use the coefficients to calculate the circulation about each airfoil. Not sure which one to use
                 circulation = 0.5 * freestream[j] * cl[j] * chord
