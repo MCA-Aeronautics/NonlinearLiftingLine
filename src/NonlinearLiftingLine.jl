@@ -24,7 +24,7 @@ module NonlinearLiftingLine
     import Xfoil
 
     # Importing functions from the VLM
-    VLM_path = "/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/VortexLatticeMethod/src"
+    VLM_path = "/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/VortexLatticeMethod/src/"
     include(string(VLM_path,"generatePanels.jl"))
     include(string(VLM_path,"calculateLift.jl"))
     include(string(VLM_path,"calculateDrag.jl"))
