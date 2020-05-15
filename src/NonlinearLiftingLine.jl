@@ -55,7 +55,7 @@ module NonlinearLiftingLine
 
         # Initialize the gamma values
         GammaValues = GammaValues_VLM*1.0
-        
+
         # Initializing the coefficient arrays
         cl = zeros(numPanels) # section lift coefficient
         cdd = zeros(numPanels) # section induced drag coefficient
@@ -67,6 +67,12 @@ module NonlinearLiftingLine
         # to be used to calculate our aerodyanmic coefficients and forces
         for i = 1:maxIter + 1 # Maximum number of iterations to go through before giving up (to avoid an infinite loop)
 
+            # Initializing the coefficient arrays on each iteration
+            cl = zeros(numPanels) # section lift coefficient
+            cdd = zeros(numPanels) # section induced drag coefficient
+            cdp = zeros(numPanels) # section pressure drag coefficient
+            cm = zeros(numPanels)  # section moment coefficient
+            converged = zeros(numPanels) # whether the iteration converged
             totalCirculation = 0.0 # initialized to zero
             oldGammaValues = GammaValues
 
