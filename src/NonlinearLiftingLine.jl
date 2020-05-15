@@ -88,6 +88,7 @@ module NonlinearLiftingLine
                 cl[j] = 2*pi*effectiveAOA[j]
 
                 # Use the coefficients to calculate the circulation about each airfoil. Not sure which one to use
+                println(j)
                 circulation = 0.5 * freestream[j] * cl[j] * chord
 
                 # update the GammaValues array
