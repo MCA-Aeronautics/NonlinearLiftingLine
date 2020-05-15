@@ -77,7 +77,7 @@ module NonlinearLiftingLine
             
             # find the total circulation
             for j = 1:(numPanels)
-
+                println("I'm here!")
                 # accounting for the difference velocity at each airfoil
                 localVelocity = sqrt(freestream[j]^2 + inducedVelocity[j]^2)
                 chord = panels[j,10] - panels[j,1]
@@ -88,7 +88,6 @@ module NonlinearLiftingLine
                 cl[j] = 2*pi*effectiveAOA[j]
 
                 # Use the coefficients to calculate the circulation about each airfoil. Not sure which one to use
-                println(j)
                 circulation = 0.5 * freestream[j] * cl[j] * chord
 
                 # update the GammaValues array
