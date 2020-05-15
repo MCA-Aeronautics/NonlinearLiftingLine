@@ -2,9 +2,9 @@
 
 # include("Desktop/FLOW Lab/Strip Theory/calculateCoefficients.jl")
 
-using Pkg
-Pkg.clone("Xfoil.jl")
-import Xfoil
+# using Pkg
+# Pkg.clone("Xfoil.jl")
+# import Xfoil
 
 function calculateCoefficients(chordwiseCoordinates,thicknessCoordinates, angle, reynoldsNumber)
 
