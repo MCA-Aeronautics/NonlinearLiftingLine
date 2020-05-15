@@ -1,10 +1,9 @@
 # To include this file:
 # include("Box/FLOW Lab/Modules MCA/NonlinearLiftingLine/src/NLL Test.jl")
 
-using Pkg; Pkg.add("Revise"); using Revise;
-Pkg.develop(PackageSpec(path = "/Users/markanderson/Box/FLOW Lab/Modules MCA/makeNACA"))
-Pkg.develop(PackageSpec(path = "/Users/markanderson/Box/FLOW Lab/Modules MCA/NonlinearLiftingLine/"))
-import makeNACA.naca
+#Pkg.develop(PackageSpec(path = "/Users/markanderson/Box/FLOW Lab/Modules MCA/makeNACA"))
+Pkg.add(PackageSpec(path="/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/NonlinearLiftingLine"))
+#import makeNACA.naca
 import NonlinearLiftingLine.NLL
 
 VLM_path = "/Users/markanderson/Box/FLOW Lab/Modules MCA/VortexLatticeMethod/src/"
@@ -20,7 +19,8 @@ fourthCoordinate = [1/6, 0.000, 0.000];
 numPanelsSpan = 20
 numPanelsChord = 1 # Must be equal to 1
 wingGeometry = generatePanels(firstCoordinate, secondCoordinate, thirdCoordinate, fourthCoordinate, numPanelsSpan, numPanelsChord)
-airfoil = naca(0,0,10,0.05)
+#airfoil = naca(0,0,10,0.05)
+airfoil = 1
 angleOfAttack = 4.2*pi/180
 sideslipAngle = 0
 freestream = ones(length(wingGeometry[:,1])).*50

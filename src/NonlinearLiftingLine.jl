@@ -9,14 +9,13 @@
 module NonlinearLiftingLine
 
     # Adding all the additional packages that are used in this code
-    using Pkg; Pkg.add("Revise"); using Revise;
-    Pkg.develop(PackageSpec(path = "/Users/markanderson/Box/FLOW Lab/Modules MCA/makeNACA"))
-    Pkg.develop(PackageSpec(path = "/Users/markanderson/Box/FLOW Lab/Modules MCA/VortexLatticeMethod"))
+    #Pkg.develop(PackageSpec(path = "/Users/markanderson/Box/FLOW Lab/Modules MCA/makeNACA"))
+    Pkg.add(PackageSpec(path="/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/VortexLatticeMethod"))
     Pkg.add("PyPlot")
     Pkg.add("LinearAlgebra")
     Pkg.add("FLOWMath")
     Pkg.clone("Xfoil.jl")
-    import makeNACA.naca
+    #import makeNACA.naca
     import VortexLatticeMethod.VLM
     using PyPlot
     using LinearAlgebra
@@ -24,7 +23,7 @@ module NonlinearLiftingLine
     import Xfoil
 
     # Importing functions from the VLM
-    VLM_path = "/Users/markanderson/Box/FLOW Lab/Modules MCA/VortexLatticeMethod/src/"
+    VLM_path = "/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/VortexLatticeMethod/src"
     include(string(VLM_path,"generatePanels.jl"))
     include(string(VLM_path,"calculateLift.jl"))
     include(string(VLM_path,"calculateDrag.jl"))
@@ -84,7 +83,8 @@ module NonlinearLiftingLine
                 localReynoldsNumber = localVelocity * chord / nu
 
                 # Calculate the lift and drag coefficients for that angle for each airfoil
-                cl[j], cdd[j], cdp[j], cm[j], converged[j] = calculateCoefficients(airfoil[:,1],airfoil[:,2], effectiveAOA[j], localReynoldsNumber/chord);
+                # cl[j], cdd[j], cdp[j], cm[j], converged[j] = calculateCoefficients(airfoil[:,1],airfoil[:,2], effectiveAOA[j], localReynoldsNumber/chord);
+                cl = 2*pi*effectiveAOA[j]
 
                 # Use the coefficients to calculate the circulation about each airfoil. Not sure which one to use
                 circulation = 0.5 * freestream[j] * cl[j] * chord
