@@ -10,6 +10,7 @@ module NonlinearLiftingLine
 
     # Adding all the additional packages that are used in this code
     #Pkg.develop(PackageSpec(path = "/Users/markanderson/Box/FLOW Lab/Modules MCA/makeNACA"))
+    using Pkg
     Pkg.add(PackageSpec(path="/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/VortexLatticeMethod"))
     Pkg.add("PyPlot")
     Pkg.add("LinearAlgebra")
