@@ -15,7 +15,7 @@ module NonlinearLiftingLine
     Pkg.add("PyPlot")
     Pkg.add("LinearAlgebra")
     Pkg.add("FLOWMath")
-    Pkg.clone("Xfoil.jl")
+    Pkg.add(PackageSpec(url="https://github.com/byuflowlab/Xfoil.jl"))
     #import makeNACA.naca
     import VortexLatticeMethod.VLM
     using PyPlot
