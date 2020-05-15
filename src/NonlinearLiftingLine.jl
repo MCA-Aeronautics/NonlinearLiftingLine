@@ -77,7 +77,7 @@ module NonlinearLiftingLine
             
             # find the total circulation
             for j = 1:(numPanels)
-                println("I'm here!")
+                
                 # accounting for the difference velocity at each airfoil
                 localVelocity = sqrt(freestream[j]^2 + inducedVelocity[j]^2)
                 chord = panels[j,10] - panels[j,1]
