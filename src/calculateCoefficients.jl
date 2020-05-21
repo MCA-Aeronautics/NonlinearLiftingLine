@@ -37,8 +37,8 @@ function calculateCoefficients(chordwiseCoordinates,thicknessCoordinates, angle,
     end
 
     # The old way: each airfoil was calculated on each iteration
-    Xfoil.setCoordinates(chordwiseCoordinates,thicknessCoordinates)
-    cl, cdd, cdp, cm, converged = Xfoil.solveAlpha(angle,reynoldsNumber)
+    # Xfoil.setCoordinates(chordwiseCoordinates,thicknessCoordinates)
+    # cl, cdd, cdp, cm, converged = Xfoil.solveAlpha(angle,reynoldsNumber)
     #println("Angle = ",angle,", Reynolds Number = ",reynoldsNumber," -> cl = ",cl)
     return cl[1], cdd[1], cdp[1], cm[1], converged[1]
 
