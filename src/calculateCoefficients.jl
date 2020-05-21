@@ -2,6 +2,9 @@
 
 # include("Desktop/FLOW Lab/Strip Theory/calculateCoefficients.jl")
 
+Pkg.add(PackageSpec(path="/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/makeAirfoil"))
+import makeAirfoil.tabulateData
+
 function calculateCoefficients(chordwiseCoordinates,thicknessCoordinates, angle, reynoldsNumber)
 
     angle = angle*180/pi # Converting to degrees
