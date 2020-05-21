@@ -12,12 +12,14 @@ module NonlinearLiftingLine
     #Pkg.develop(PackageSpec(path = "/Users/markanderson/Box/FLOW Lab/Modules MCA/makeNACA"))
     using Pkg
     Pkg.add(PackageSpec(path="/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/VortexLatticeMethod"))
+    Pkg.add(PackageSpec(path="/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/makeAirfoil"))
     Pkg.add("PyPlot")
     Pkg.add("LinearAlgebra")
     Pkg.add("FLOWMath")
     Pkg.add(PackageSpec(url="https://github.com/byuflowlab/Xfoil.jl"))
     #import makeNACA.naca
     import VortexLatticeMethod.VLM
+    import makeAirfoil.tabulateData
     using PyPlot
     using LinearAlgebra
     using FLOWMath
