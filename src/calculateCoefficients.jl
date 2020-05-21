@@ -3,7 +3,11 @@
 # include("Desktop/FLOW Lab/Strip Theory/calculateCoefficients.jl")
 
 Pkg.add(PackageSpec(path="/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/makeAirfoil"))
+Pkg.add("FLOWMath")
+Pkg.add("CSV")
 import makeAirfoil.tabulateData
+using FLOWMath
+using CSV
 
 function calculateCoefficients(chordwiseCoordinates,thicknessCoordinates, angle, reynoldsNumber)
 
@@ -18,6 +22,8 @@ function calculateCoefficients(chordwiseCoordinates,thicknessCoordinates, angle,
     if isfile(filename)
         # println(filename," exists!")
         # Then do interpolation
+        data = CSV.read(filename)
+        cl = FLOWMath.linear(data[:,1],data[:,2],angle)
     else
         println(filename," does not exist...")
         println("Let's create that file real fast")
