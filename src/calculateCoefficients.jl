@@ -27,7 +27,7 @@ function calculateCoefficients(chordwiseCoordinates,thicknessCoordinates, angle,
         angleRange = -20:2:30
         path = "airfoil-data"
         airfoilName = "NACA0010"
-        makeAirfoil.tabulateData(airfoil,angleRange,path,airfoilName,roundedReynoldsNumber)
+        tabulateData(airfoil,angleRange,path,airfoilName,roundedReynoldsNumber)
     end
 
     # The old way: each airfoil was calculated on each iteration
