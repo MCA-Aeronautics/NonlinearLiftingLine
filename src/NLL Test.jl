@@ -17,7 +17,7 @@ secondCoordinate = [0.000, 0.500, 0.000];
 thirdCoordinate  = [1/6, 0.500, 0.000];
 fourthCoordinate = [1/6, 0.000, 0.000];
 
-numPanelsSpan = 20
+numPanelsSpan = 100
 numPanelsChord = 1 # Must be equal to 1
 wingGeometry = generatePanels(firstCoordinate, secondCoordinate, thirdCoordinate, fourthCoordinate, numPanelsSpan, numPanelsChord)
 airfoil = naca(0,0,10,0.05)
