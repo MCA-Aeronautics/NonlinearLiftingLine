@@ -2,8 +2,8 @@
 # include("Box/FLOW Lab/Modules MCA/NonlinearLiftingLine/src/NLL Test.jl")
 
 #Pkg.develop(PackageSpec(path = "/Users/markanderson/Box/FLOW Lab/Modules MCA/makeNACA"))
-Pkg.add(PackageSpec(path="/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/NonlinearLiftingLine"))
-Pkg.add(PackageSpec(path="/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/makeAirfoil"))
+Pkg.develop(PackageSpec(path="/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/NonlinearLiftingLine"))
+Pkg.develop(PackageSpec(path="/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/makeAirfoil"))
 import NonlinearLiftingLine.NLL
 import makeAirfoil.naca
 

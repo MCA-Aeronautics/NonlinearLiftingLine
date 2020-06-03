@@ -43,6 +43,6 @@ function calculateCoefficients(chordwiseCoordinates,thicknessCoordinates, angle,
     # println("Angle = ",angle,", Reynolds Number = ",reynoldsNumber," -> cl = ",cl)
     # return cl[1], cdd[1], cdp[1], cm[1], converged[1]
 
-    return cl
+    return cl[1]
 
 end
