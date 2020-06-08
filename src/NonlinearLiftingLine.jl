@@ -9,24 +9,20 @@
 module NonlinearLiftingLine
 
     # Adding all the additional packages that are used in this code
-    #Pkg.develop(PackageSpec(path = "/Users/markanderson/Box/FLOW Lab/Modules MCA/makeNACA"))
     using Pkg
-    Pkg.add(PackageSpec(path="/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/VortexLatticeMethod"))
-    Pkg.add(PackageSpec(path="/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/makeAirfoil"))
     Pkg.add("PyPlot")
     Pkg.add("LinearAlgebra")
     Pkg.add("FLOWMath")
     Pkg.add(PackageSpec(url="https://github.com/byuflowlab/Xfoil.jl"))
-    #import makeNACA.naca
-    import VortexLatticeMethod.VLM
-    import makeAirfoil.tabulateData
+    #import makeAirfoil.tabulateData
     using PyPlot
     using LinearAlgebra
     using FLOWMath
     import Xfoil
 
     # Importing functions from the VLM
-    VLM_path = "/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/VortexLatticeMethod/src/"
+    VLM_path = "../VortexLatticeMethod/src/"
+    include(string(VLM_path,"VortexLatticeMethod.jl"))
     include(string(VLM_path,"generatePanels.jl"))
     include(string(VLM_path,"calculateLift.jl"))
     include(string(VLM_path,"calculateDrag.jl"))
@@ -34,6 +30,11 @@ module NonlinearLiftingLine
     include(string(VLM_path,"calculateInducedVelocity.jl"))
     include(string(VLM_path,"definePoints.jl"))
     include(string(VLM_path,"Velocity.jl"))
+    import VortexLatticeMethod.VLM
+
+    # Including the tabulateData function
+    makeAirfoil_path = "../makeAirfoil/src/"
+    include(string(makeAirfoil_path,"makeAirfoil.jl"))
 
     # Importing function from the NLL
     include("calculateEffectiveAlpha.jl")

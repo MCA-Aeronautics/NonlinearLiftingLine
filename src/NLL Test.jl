@@ -2,14 +2,15 @@
 # include("Box/FLOW Lab/Modules MCA/NonlinearLiftingLine/src/NLL Test.jl")
 
 #Pkg.develop(PackageSpec(path = "/Users/markanderson/Box/FLOW Lab/Modules MCA/makeNACA"))
-Pkg.develop(PackageSpec(path="/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/NonlinearLiftingLine"))
-Pkg.develop(PackageSpec(path="/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/makeAirfoil"))
+Pkg.develop(PackageSpec(path=pwd()))
+#Pkg.develop(PackageSpec(path="/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/makeAirfoil"))
 import NonlinearLiftingLine.NLL
+#import makeAirfoil.naca
+
+include("../VortexLatticeMethod/src/generatePanels.jl")
+
+include("../makeAirfoil/src/makeAirfoil.jl")
 import makeAirfoil.naca
-
-VLM_path = "/Users/markanderson/Box/FLOW-MCA/FLOW-Code/Repositories/personal-projects/VortexLatticeMethod/src/"
-
-include(string(VLM_path,"generatePanels.jl"))
 
 # Straight Wing Geometry
 firstCoordinate  = [0.000, 0.000, 0.000];
