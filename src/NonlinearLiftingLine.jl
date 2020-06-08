@@ -96,6 +96,7 @@ module NonlinearLiftingLine
                 # cl[j], cdd[j], cdp[j], cm[j], converged[j] = calculateCoefficients(airfoil[:,1],airfoil[:,2], effectiveAOA[j], localReynoldsNumber/chord);
                 cl[j] = calculateCoefficients(airfoil[:,1],airfoil[:,2], effectiveAOA[j], localReynoldsNumber/chord);
                 # cl[j] = 2*pi*effectiveAOA[j]
+                println("Effective AOA = ",effectiveAOA[j],"    Local Re = ",localReynoldsNumber/chord,"  cl = ",cl[j])
 
                 # Use the coefficients to calculate the circulation about each airfoil. Not sure which one to use
                 circulation = 0.5 * freestream[j] * cl[j] * chord

@@ -24,7 +24,7 @@ function calculateCoefficients(chordwiseCoordinates,thicknessCoordinates, angle,
         airfoil[:,1] = chordwiseCoordinates
         airfoil[:,2] = thicknessCoordinates
         angleRange = -20:1:30
-        reynoldsNumberRange = 1e5:1e5:1e6
+        reynoldsNumberRange = 1e5:1e5:5e6
         path = "airfoil-data"
         airfoilName = "NACA0010"
         tabulateData(airfoil,angleRange,reynoldsNumberRange,path,airfoilName)
