@@ -1,0 +1,6 @@
+[submodule "VortexLatticeMethod"]
+	path = VortexLatticeMethod
+	url = https://github.com/Mark-C-Anderson/VortexLatticeMethod.git
+[submodule "makeAirfoil"]
+	path = makeAirfoil
+	url = https://github.com/Mark-C-Anderson/makeAirfoil.git
