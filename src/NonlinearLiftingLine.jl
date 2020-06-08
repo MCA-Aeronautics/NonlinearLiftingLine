@@ -13,8 +13,6 @@ module NonlinearLiftingLine
     Pkg.add("PyPlot")
     Pkg.add("LinearAlgebra")
     Pkg.add("FLOWMath")
-    Pkg.add(PackageSpec(url="https://github.com/byuflowlab/Xfoil.jl"))
-    #import makeAirfoil.tabulateData
     using PyPlot
     using LinearAlgebra
     using FLOWMath
@@ -31,10 +29,6 @@ module NonlinearLiftingLine
     include(string(VLM_path,"definePoints.jl"))
     include(string(VLM_path,"Velocity.jl"))
     import VortexLatticeMethod.VLM
-
-    # Including the tabulateData function
-    makeAirfoil_path = "../makeAirfoil/src/"
-    include(string(makeAirfoil_path,"makeAirfoil.jl"))
 
     # Importing function from the NLL
     include("calculateEffectiveAlpha.jl")
@@ -94,7 +88,6 @@ module NonlinearLiftingLine
                 localReynoldsNumber = localVelocity * chord / nu
 
                 # Calculate the lift and drag coefficients for that angle for each airfoil
-                # cl[j], cdd[j], cdp[j], cm[j], converged[j] = calculateCoefficients(airfoil[:,1],airfoil[:,2], effectiveAOA[j], localReynoldsNumber/chord);
                 cl[j] = calculateCoefficients(airfoil[:,1],airfoil[:,2], effectiveAOA[j], localReynoldsNumber/chord);
                 
                 # Use the coefficients to calculate the circulation about each airfoil. Not sure which one to use
