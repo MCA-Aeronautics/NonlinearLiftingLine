@@ -36,9 +36,7 @@ module NonlinearLiftingLine
 
     function NLL(panels,
                  airfoil,
-                 angleOfAttack,
-                 sideslipAngle = 0,
-                 freestream = ones(length(panels[:,1])),
+                 freestream,
                  density = 1.225)
 
         # Defining some variables
@@ -48,7 +46,7 @@ module NonlinearLiftingLine
         nu = 1.48e-5;
         cl_old = zeros(numPanels);
 
-        CL_VLM, CDi_near_VLM, cl_VLM, cd_near_VLM, spanLocations, GammaValues_VLM = VLM(panels,angleOfAttack,sideslipAngle,freestream,density)
+        CL_VLM, CDi_near_VLM, cl_VLM, cd_near_VLM, spanLocations, GammaValues_VLM = VLM(panels,freestream,density)
 
         # Initialize the gamma values
         GammaValues = GammaValues_VLM*1.0
