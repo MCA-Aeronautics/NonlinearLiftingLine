@@ -1,16 +1,15 @@
-function calculateEffectiveAlpha(freestream,inducedVelocity,angle)
+function calculateEffectiveAlpha(freestream,inducedVelocity,anglesOfAttack)
 
-    inducedAlpha = zeros(length(freestream))
-    for i = 1:length(freestream)
+    inducedAlpha = zeros(length(freestream[:,1]))
+    effectiveAlphas = similar(inducedAlpha)
+    for i = 1:length(freestream[:,1])
        
-        inducedAlpha[i] = atan(inducedVelocity[i],freestream[i])
+        inducedAlpha[i] = atan(inducedVelocity[i],freestream[i,1]) # Just x-component of freestream
 
-        #println("Induced Angle at panel ",i," = ",inducedAlpha[i]*180/pi)
+        effectiveAlphas[i] = anglesOfAttack[i] .+ inducedAlpha[i]
 
     end
 
-    effectiveAlpha = angle .+ inducedAlpha
-
-    return effectiveAlpha
+    return effectiveAlphas
 
 end
