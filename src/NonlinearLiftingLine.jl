@@ -36,9 +36,7 @@ module NonlinearLiftingLine
 
     function NLL(panels,
                  airfoil,
-                 angleOfAttack,
-                 sideslipAngle = 0,
-                 freestream = ones(length(panels[:,1])),
+                 freestream,
                  density = 1.225)
 
         # Defining some variables
@@ -48,7 +46,13 @@ module NonlinearLiftingLine
         nu = 1.48e-5;
         cl_old = zeros(numPanels);
 
-        CL_VLM, CDi_near_VLM, cl_VLM, cd_near_VLM, spanLocations, GammaValues_VLM = VLM(panels,angleOfAttack,sideslipAngle,freestream,density)
+        # Calculating the angles of attack across the span
+        anglesOfAttack = zeros(numPanels)
+        for i = 1:numPanels
+            anglesOfAttack[i] = atan(freestream[i,3] ./ freestream[i,1])
+        end
+
+        CL_VLM, CDi_near_VLM, cl_VLM, cd_near_VLM, spanLocations, GammaValues_VLM = VLM(panels,freestream,density)
 
         # Initialize the gamma values
         GammaValues = GammaValues_VLM*1.0
@@ -77,13 +81,13 @@ module NonlinearLiftingLine
             inducedVelocity = calculateInducedVelocity(panels,GammaValues,"quarter chord") 
 
             # Calculate the effective angle of attack for each airfoil
-            effectiveAOA = calculateEffectiveAlpha(freestream,inducedVelocity,angleOfAttack) # multiplied by cosine of the angle of attack so that it becomes perpendicular to the freestream
+            effectiveAOA = calculateEffectiveAlpha(freestream,inducedVelocity,anglesOfAttack) # multiplied by cosine of the angle of attack so that it becomes perpendicular to the freestream
             
             # find the total circulation
             for j = 1:(numPanels)
 
                 # accounting for the difference velocity at each airfoil
-                localVelocity = sqrt(freestream[j]^2 + inducedVelocity[j]^2)
+                localVelocity = sqrt(dot(freestream[j,:],[1,0,0])^2 + inducedVelocity[j]^2)
                 chord = panels[j,10] - panels[j,1]
                 localReynoldsNumber = localVelocity * chord / nu
 
