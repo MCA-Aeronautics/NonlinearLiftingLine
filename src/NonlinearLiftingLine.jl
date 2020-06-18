@@ -138,12 +138,12 @@ module NonlinearLiftingLine
         end
 
         # Getting the results from the nonlinear solver
-        CL, _, _ = calculateLift(density,freestream,panels,GammaValues); # Lift
+        CL, cl, _ = calculateLift(density,freestream,panels,GammaValues); # Lift
         CDi_near, _, _ = calculateInducedDrag(density,freestream,panels,GammaValues,cl); # Near-field induced drag
 
         CL, cl_VLM, cLSpanLocations_VLM = calculateLift(density,freestream,panels,GammaValues_VLM); # Lift
 
-        return CL, CDi_near
+        return CL, CDi_near, cl
 
     end
 

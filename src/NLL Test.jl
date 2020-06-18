@@ -25,7 +25,19 @@ for i = 1:numPanels
     freestream[i,:] = 50 .* [cos(angleOfAttack)*cos(sideslipAngle),-sin(sideslipAngle),sin(angleOfAttack)*cos(sideslipAngle)]
 end
 
-CL, CDi = NLL(wingGeometry,airfoil,freestream)
+# modelProp = 0:(2*pi/30):(2*pi)
+# modelWash = similar(modelProp)
+# for i = 1:length(modelProp)
+
+#     modelWash[i] = 5 * sin(modelProp[i])
+
+# end
+
+# freestream[35:65,:] = freestream[35:65,:] .+ modelWash
+
+# freestream[135:165,:] = freestream[135:165,:] .+ reverse(modelWash)
+
+CL, CDi, _ = NLL(wingGeometry,airfoil,freestream)
 
 println("Nonlinear Lifting Line Theory Results:")
 println("CL  = ",CL)
