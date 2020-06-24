@@ -1,9 +1,0 @@
-[submodule "VortexLatticeMethod"]
-	path = VortexLatticeMethod
-	url = https://github.com/Mark-C-Anderson/VortexLatticeMethod.git
-[submodule "makeAirfoil"]
-	path = makeAirfoil
-	url = https://github.com/Mark-C-Anderson/makeAirfoil.git
-[submodule "Xfoil.jl"]
-	path = Xfoil.jl
-	url = https://github.com/byuflowlab/Xfoil.jl

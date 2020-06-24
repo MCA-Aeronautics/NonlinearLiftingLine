@@ -13,6 +13,7 @@ module NonlinearLiftingLine
     Pkg.add("PyPlot")
     Pkg.add("LinearAlgebra")
     Pkg.add("FLOWMath")
+    Pkg.develop(PackageSpec(url="https://github.com/byuflowlab/Xfoil.jl"))
     using PyPlot
     using LinearAlgebra
     using FLOWMath
