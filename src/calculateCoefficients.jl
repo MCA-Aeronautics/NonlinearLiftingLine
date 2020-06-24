@@ -1,5 +1,6 @@
 # Purpose: To take airfoil coordinates and use XFOIL to generate coefficient data for it
 
+using Pkg
 Pkg.add("FLOWMath")
 Pkg.add("CSV")
 using FLOWMath
