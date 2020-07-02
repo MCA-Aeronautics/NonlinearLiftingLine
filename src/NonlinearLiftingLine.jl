@@ -14,22 +14,14 @@ module NonlinearLiftingLine
     Pkg.add("LinearAlgebra")
     Pkg.add("FLOWMath")
     Pkg.develop(PackageSpec(url="https://github.com/byuflowlab/Xfoil.jl"))
+    Pkg.develop(PackageSpec(url="https://github.com/Mark-C-Anderson/VLMMCA"))
+    Pkg.develop(PackageSpec(url="https://github.com/Mark-C-Anderson/makeAirfoil"))
     using PyPlot
     using LinearAlgebra
     using FLOWMath
     import Xfoil
-
-    # Importing functions from the VLM
-    VLM_path = "../VortexLatticeMethod/src/"
-    include(string(VLM_path,"VortexLatticeMethod.jl"))
-    include(string(VLM_path,"generatePanels.jl"))
-    include(string(VLM_path,"calculateLift.jl"))
-    include(string(VLM_path,"calculateDrag.jl"))
-    include(string(VLM_path,"calculateInducedDrag.jl"))
-    include(string(VLM_path,"calculateInducedVelocity.jl"))
-    include(string(VLM_path,"definePoints.jl"))
-    include(string(VLM_path,"Velocity.jl"))
-    import VortexLatticeMethod.VLM
+    import VLMMCA
+    import makeAirfoil
 
     # Importing function from the NLL
     include("calculateEffectiveAlpha.jl")
