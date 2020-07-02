@@ -7,7 +7,6 @@ using FLOWMath
 using CSV
 
 # Including the tabulateData function
-include("../makeAirfoil/src/makeAirfoil.jl")
 import makeAirfoil.tabulateData
 
 function calculateCoefficients(chordwiseCoordinates,thicknessCoordinates, angle, reynoldsNumber)
