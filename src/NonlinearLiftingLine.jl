@@ -22,8 +22,14 @@ module NonlinearLiftingLine
     using FLOWMath
     using CSV
     import Xfoil
-    import VLMMCA
-    import makeAirfoil
+    import VLMMCA.VLM
+    import VLMMCA.calculateLift
+    import VLMMCA.calculateInducedDrag
+    import VLMMCA.calculateInducedVelocity
+    #import VLMMCA.
+    import makeAirfoil.tabulateData
+    #import makeAirfoil.
+
 
     function NLL(panels,
                  airfoil,
@@ -166,21 +172,23 @@ module NonlinearLiftingLine
         cl = FLOWMath.interp2d(akima,data_angles,data_reynolds,data_cl,angle:angle,reynoldsNumber:reynoldsNumber)
     
         return cl[1]
-    
-        function calculateEffectiveAlpha(freestream,inducedVelocity,anglesOfAttack)
 
-            inducedAlpha = zeros(length(freestream[:,1]))
-            effectiveAlphas = similar(inducedAlpha)
-            for i = 1:length(freestream[:,1])
-               
-                inducedAlpha[i] = atan(inducedVelocity[i],freestream[i,1]) # Just x-component of freestream
-        
-                effectiveAlphas[i] = anglesOfAttack[i] .+ inducedAlpha[i]
-        
-            end
-        
-            return effectiveAlphas
-        
+    end
+    
+    function calculateEffectiveAlpha(freestream,inducedVelocity,anglesOfAttack)
+
+        inducedAlpha = zeros(length(freestream[:,1]))
+        effectiveAlphas = similar(inducedAlpha)
+        for i = 1:length(freestream[:,1])
+            
+            inducedAlpha[i] = atan(inducedVelocity[i],freestream[i,1]) # Just x-component of freestream
+    
+            effectiveAlphas[i] = anglesOfAttack[i] .+ inducedAlpha[i]
+    
         end
+    
+        return effectiveAlphas
+    
+    end
 
 end

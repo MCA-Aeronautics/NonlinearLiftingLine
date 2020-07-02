@@ -1,10 +1,9 @@
 revise()
 Pkg.develop(PackageSpec(path=pwd()))
+Pkg.develop(PackageSpec(url="https://github.com/Mark-C-Anderson/VLMMCA"))
+Pkg.develop(PackageSpec(url="https://github.com/Mark-C-Anderson/makeAirfoil"))
 import NonlinearLiftingLine.NLL
-
-include("../VortexLatticeMethod/src/generatePanels.jl")
-
-include("../makeAirfoil/src/makeAirfoil.jl")
+import VLMMCA.generatePanels
 import makeAirfoil.naca
 
 # Straight Wing Geometry
@@ -25,17 +24,17 @@ for i = 1:numPanels
     freestream[i,:] = 50 .* [cos(angleOfAttack)*cos(sideslipAngle),-sin(sideslipAngle),sin(angleOfAttack)*cos(sideslipAngle)]
 end
 
-# modelProp = 0:(2*pi/30):(2*pi)
-# modelWash = similar(modelProp)
-# for i = 1:length(modelProp)
+modelProp = 0:(2*pi/30):(2*pi)
+modelWash = similar(modelProp)
+for i = 1:length(modelProp)
 
-#     modelWash[i] = 5 * sin(modelProp[i])
+    modelWash[i] = 5 * sin(modelProp[i])
 
-# end
+end
 
-# freestream[35:65,:] = freestream[35:65,:] .+ modelWash
+freestream[35:65,:] = freestream[35:65,:] .+ modelWash
 
-# freestream[135:165,:] = freestream[135:165,:] .+ reverse(modelWash)
+freestream[135:165,:] = freestream[135:165,:] .+ reverse(modelWash)
 
 CL, CDi, _ = NLL(wingGeometry,airfoil,freestream)
 
