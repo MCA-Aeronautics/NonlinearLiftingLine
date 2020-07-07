@@ -118,7 +118,7 @@ module NonlinearLiftingLine
                 title(string("Iteration ",i))
                 grid("on")
                 legend()
-                xlim(-0.5,0.5)
+                #xlim(-0.5,0.5)
                 ylim(minimum(cl_VLM)*0.5,maximum(cl_VLM)*1.25)
                 draw()
                 println("Iteration: ",i,"\t CL: ",round(CL,digits=6),"\t RMS Difference: ",round(cl_difference_rms,digits=6))
