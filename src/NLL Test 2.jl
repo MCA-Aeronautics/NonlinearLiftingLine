@@ -34,7 +34,7 @@ fourthCoordinate = [0.279,0,0]
 # thirdCoordinate = [0.2,0.5,0]
 # fourthCoordinate = [0.2,0,0]
 
-numPanelsSpan = 20
+numPanelsSpan = 100
 numPanelsChord = 1
 insidePortion = generatePanels(firstCoordinate,secondCoordinate,thirdCoordinate,fourthCoordinate,numPanelsSpan,numPanelsChord)
 
@@ -51,7 +51,7 @@ fourthCoordinate = [0.279,0.49,0]
 # thirdCoordinate = [0.3,1.0,0]
 # fourthCoordinate = [0.2,0.5,0]
 
-numPanelsSpan = 20
+numPanelsSpan = 100
 
 outsidePortion = generatePanels(firstCoordinate,secondCoordinate,thirdCoordinate,fourthCoordinate,numPanelsSpan,numPanelsChord)
 

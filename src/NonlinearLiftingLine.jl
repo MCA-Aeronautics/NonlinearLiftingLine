@@ -78,40 +78,58 @@ module NonlinearLiftingLine
             # Calculate the induced velocity at the front of each horseshoe vortex (1/4 chord)
             inducedVelocity = calculateInducedVelocity(panels,GammaValues,"quarter chord")
 
-            # #if i == 1
+            # if i == 1
             #     figure(2)
             #     plot(spanLocations,GammaValues)
             #     title("Circulation Values")
-            # #end
+            # end
 
-            # #if i == 1
+            # if i == 1
             #     figure(3)
             #     plot(spanLocations,inducedVelocity)
             #     title("Induced Velocities")
-            # #end
+            # end
 
             # Calculate the effective angle of attack for each airfoil
             effectiveAOA = calculateEffectiveAlpha(freestream,inducedVelocity,anglesOfAttack) # multiplied by cosine of the angle of attack so that it becomes perpendicular to the freestream
+
+            if i == 1
+                figure(4)
+                plot(spanLocations,effectiveAOA)
+                title("Effective AOA")
+            end
 
             # find the total circulation
             for j = 1:(numPanels)
 
                 # accounting for the difference velocity at each airfoil
                 localVelocity = sqrt(dot(freestream[j,:],[1,0,0])^2 + inducedVelocity[j]^2)
-                chord = panels[j,10] - panels[j,1]
+                # We need to average the chords on either side of the panels
+                chord_lhs = panels[j,10] - panels[j,1]
+                chord_rhs = panels[j,7] - panels[j,4]
+                chord = (chord_lhs + chord_rhs) / 2
+
                 localReynoldsNumber = localVelocity * chord / nu
 
                 # Calculate the lift and drag coefficients for that angle for each airfoil
                 cl[j] = calculateCoefficients(airfoil[:,1],airfoil[:,2], effectiveAOA[j], localReynoldsNumber/chord);
                 
+                #println("Iteration ",i," Panel ",j,". cl = ",cl[j])
+
                 # Use the coefficients to calculate the circulation about each airfoil. Not sure which one to use
-                circulation = 0.5 * freestream[j] * cl[j] * chord
+                circulation = 0.5 * norm(freestream[j,:]) * cl[j] * chord
 
                 # update the GammaValues array
-                omega = 0.97
+                omega = 0.99
                 GammaValues[j] = omega*oldGammaValues[j] + (1-omega)*circulation[1]
 
             end
+
+            #if i == 1
+                figure(2)
+                plot(spanLocations,GammaValues)
+                title("Circulation Values")
+            #end
 
             # Defining the rms difference between the previous cl and current cl distributions
             cl_difference = cl .- cl_old
@@ -131,7 +149,7 @@ module NonlinearLiftingLine
                 title(string("Iteration ",i))
                 grid("on")
                 legend()
-                xlim(-1.3,1.3)
+                #xlim(-1.3,1.3)
                 ylim(minimum(cl_VLM)*0.5,maximum(cl_VLM)*1.25)
                 draw()
                 println("Iteration: ",i,"\t CL: ",round(CL,digits=6),"\t RMS Difference: ",round(cl_difference_rms,digits=6))
@@ -139,7 +157,7 @@ module NonlinearLiftingLine
             end
 
             # Check for convergence
-            if cl_difference_rms <= 1*10^-6 # see if the rms difference is small enough to be considered converged           
+            if cl_difference_rms <= 1*10^-5 # see if the rms difference is small enough to be considered converged           
                 break;
             end
 
