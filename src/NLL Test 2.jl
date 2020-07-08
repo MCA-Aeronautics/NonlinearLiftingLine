@@ -21,6 +21,11 @@ import NonlinearLiftingLine.NLL
 # Creating the airfoil
 airfoil = naca(0,0,10,0.05)
 
+# data = CSV.read("/Users/markanderson/Box/FLOW-MCA/Lab Notebooks/2020-07/Delft-airfoil.csv")
+# xcoords = convert(Array,data[1:end,1])
+# ycoords = convert(Array,data[1:end,2])
+# airfoil = cat(xcoords,ycoords,dims=2)
+
 # Creating the inner portion of the wing
 # Original
 firstCoordinate = [0,0,0]
