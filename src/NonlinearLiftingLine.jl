@@ -53,6 +53,7 @@ module NonlinearLiftingLine
 
         # Initialize the gamma values
         GammaValues = GammaValues_VLM*1.0
+        #GammaValues = ones(numPanels,1)
 
         # Initializing the coefficient arrays
         cl = zeros(numPanels) # section lift coefficient
@@ -75,13 +76,22 @@ module NonlinearLiftingLine
             oldGammaValues = GammaValues
 
             # Calculate the induced velocity at the front of each horseshoe vortex (1/4 chord)
-            inducedVelocity = calculateInducedVelocity(panels,GammaValues,"quarter chord") 
+            inducedVelocity = calculateInducedVelocity(panels,GammaValues,"quarter chord")
+
+            # #if i == 1
+            #     figure(2)
+            #     plot(spanLocations,GammaValues)
+            #     title("Circulation Values")
+            # #end
+
+            # #if i == 1
+            #     figure(3)
+            #     plot(spanLocations,inducedVelocity)
+            #     title("Induced Velocities")
+            # #end
 
             # Calculate the effective angle of attack for each airfoil
             effectiveAOA = calculateEffectiveAlpha(freestream,inducedVelocity,anglesOfAttack) # multiplied by cosine of the angle of attack so that it becomes perpendicular to the freestream
-            
-            figure(2)
-            plot(spanLocations,effectiveAOA.*180/pi)
 
             # find the total circulation
             for j = 1:(numPanels)
@@ -98,7 +108,7 @@ module NonlinearLiftingLine
                 circulation = 0.5 * freestream[j] * cl[j] * chord
 
                 # update the GammaValues array
-                omega = 0.99
+                omega = 0.97
                 GammaValues[j] = omega*oldGammaValues[j] + (1-omega)*circulation[1]
 
             end
