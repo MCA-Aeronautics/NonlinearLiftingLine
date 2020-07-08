@@ -1,6 +1,8 @@
 using Pkg
 Pkg.add("PyPlot")
+Pkg.add("CSV")
 using PyPlot
+using CSV
 
 revise()
 
@@ -19,12 +21,12 @@ import makeAirfoil.naca
 import NonlinearLiftingLine.NLL
 
 # Creating the airfoil
-airfoil = naca(0,0,10,0.05)
+# airfoil = naca(0,0,20,0.05)
 
-# data = CSV.read("/Users/markanderson/Box/FLOW-MCA/Lab Notebooks/2020-07/Delft-airfoil.csv")
-# xcoords = convert(Array,data[1:end,1])
-# ycoords = convert(Array,data[1:end,2])
-# airfoil = cat(xcoords,ycoords,dims=2)
+data = CSV.read("/Users/markanderson/Box/FLOW-MCA/Lab Notebooks/2020-07/Delft-airfoil.csv")
+xcoords = convert(Array,data[1:end,1])
+ycoords = convert(Array,data[1:end,2])
+airfoil = cat(xcoords,ycoords,dims=2)
 
 # Creating the inner portion of the wing
 # Original
@@ -78,4 +80,4 @@ end
 
 pygui(true)
 
-CL, CDi, cl = NLL(sortedPanels,airfoil,freestream)
+CL, CDi, cl = NLL(sortedPanels,airfoil,"NACA642-015A",freestream)

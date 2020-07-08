@@ -33,6 +33,7 @@ module NonlinearLiftingLine
 
     function NLL(panels,
                  airfoil,
+                 airfoilName,
                  freestream,
                  density = 1.225)
 
@@ -112,7 +113,7 @@ module NonlinearLiftingLine
                 localReynoldsNumber = localVelocity * chord / nu
 
                 # Calculate the lift and drag coefficients for that angle for each airfoil
-                cl[j] = calculateCoefficients(airfoil[:,1],airfoil[:,2], effectiveAOA[j], localReynoldsNumber/chord);
+                cl[j] = calculateCoefficients(airfoil[:,1],airfoil[:,2], effectiveAOA[j], localReynoldsNumber/chord, airfoilName);
                 
                 #println("Iteration ",i," Panel ",j,". cl = ",cl[j])
 
@@ -175,11 +176,11 @@ module NonlinearLiftingLine
 
     end
 
-    function calculateCoefficients(chordwiseCoordinates,thicknessCoordinates, angle, reynoldsNumber)
+    function calculateCoefficients(chordwiseCoordinates,thicknessCoordinates, angle, reynoldsNumber, airfoilName)
 
         angle = angle*180/pi # Converting to degrees
     
-        airfoilName = "NACA0010"
+        # airfoilName = "NACA0010"
     
         filename = string("airfoil-data/",airfoilName,".csv")
     
