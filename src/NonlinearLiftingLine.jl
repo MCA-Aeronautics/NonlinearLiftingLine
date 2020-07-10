@@ -38,7 +38,7 @@ module NonlinearLiftingLine
                  density = 1.225)
 
         # Defining some variables
-        maxIter = 500
+        maxIter = 50
         showConvergence = true
         numPanels = length(panels[:,1])
         nu = 1.48e-5;
@@ -158,7 +158,7 @@ module NonlinearLiftingLine
             end
 
             # Check for convergence
-            if cl_difference_rms <= 1*10^-6 # see if the rms difference is small enough to be considered converged           
+            if cl_difference_rms <= 1*10^-3 # see if the rms difference is small enough to be considered converged           
                 break;
             end
 
