@@ -90,23 +90,23 @@ module NonlinearLiftingLine
             # Calculate the effective angle of attack for each airfoil
             effectiveAOA = calculateEffectiveAlpha(freestream,inducedVelocity,anglesOfAttack) # multiplied by cosine of the angle of attack so that it becomes perpendicular to the freestream
 
-            if i <= 5
-                figure(3)
-                plot(spanLocations,GammaValues)
-                title("Circulation Values")
-            end
+            # if i <= 5
+            #     figure(3)
+            #     plot(spanLocations,GammaValues)
+            #     title("Circulation Values")
+            # end
 
-            if i <= 5
-                figure(4)
-                plot(spanLocations,inducedVelocity)
-                title("Induced Velocity")
-            end
+            # if i <= 5
+            #     figure(4)
+            #     plot(spanLocations,inducedVelocity)
+            #     title("Induced Velocity")
+            # end
 
-            if i <= 5
-                figure(5)
-                plot(spanLocations,effectiveAOA)
-                title("Effective AOA")
-            end
+            # if i <= 5
+            #     figure(5)
+            #     plot(spanLocations,effectiveAOA)
+            #     title("Effective AOA")
+            # end
 
             # find the total circulation
             for j = 1:(numPanels)
@@ -122,7 +122,8 @@ module NonlinearLiftingLine
                 #println("Iteration ",i," Panel ",j,". cl = ",cl[j])
 
                 # Use the coefficients to calculate the circulation about each airfoil. Not sure which one to use
-                circulation = 0.5 * norm(freestream[j,:]) * cl[j] * chord[j]
+                #circulation = 0.5 * norm(freestream[j,:]) * cl[j] * chord[j]
+                circulation = 0.5 * norm(freestream[1,:]) * cl[j] * chord[j]
 
                 # update the GammaValues array
                 omega = 0.99
@@ -158,7 +159,7 @@ module NonlinearLiftingLine
             end
 
             # Check for convergence
-            if cl_difference_rms <= 1*10^-5 # see if the rms difference is small enough to be considered converged           
+            if cl_difference_rms <= 1*10^-4 # see if the rms difference is small enough to be considered converged           
                 break;
             end
 
