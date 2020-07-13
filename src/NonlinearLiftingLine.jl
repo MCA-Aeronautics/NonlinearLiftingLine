@@ -33,6 +33,7 @@ module NonlinearLiftingLine
 
     function NLL(panels,
                  airfoil,
+                 airfoilName,
                  freestream,
                  density = 1.225)
 
