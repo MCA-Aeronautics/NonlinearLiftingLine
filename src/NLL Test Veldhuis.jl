@@ -55,7 +55,7 @@ numPanels = length(panels[:,1])
 
 freestream = zeros(numPanels,3)
 
-Vinf = 50
+Vinf = 10
 
 alpha = 4*pi/180
 
@@ -102,16 +102,17 @@ end
 
 
 # modelProp = 0:(2*pi/30):(2*pi)
-# modelWash = similar(modelProp)
+# modelWash = zeros(length(modelProp),3)
 # for i = 1:length(modelProp)
 
-#     modelWash[i] = 5 * sin(modelProp[i])
+#     modelWash[i,1] = 2 * sin(modelProp[i])
+#     modelWash[i,3] = 0.5 * sin(modelProp[i])
 
 # end
 
-# freestream[35:65,:] = freestream[35:65,:] .+ modelWash
+# freestream[35:65,:] = freestream[35:65,:] .+ reverse(modelWash,dims=1)
 
-# freestream[135:165,:] = freestream[135:165,:] .+ reverse(modelWash)
+# freestream[135:165,:] = freestream[135:165,:] .+ modelWash
 
 
 #-----------

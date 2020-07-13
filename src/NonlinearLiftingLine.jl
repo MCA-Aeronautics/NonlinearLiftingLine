@@ -90,21 +90,21 @@ module NonlinearLiftingLine
             # Calculate the effective angle of attack for each airfoil
             effectiveAOA = calculateEffectiveAlpha(freestream,inducedVelocity,anglesOfAttack) # multiplied by cosine of the angle of attack so that it becomes perpendicular to the freestream
 
-            if i == 1
+            if i <= 5
                 figure(3)
-                scatter(spanLocations,GammaValues)
+                plot(spanLocations,GammaValues)
                 title("Circulation Values")
             end
 
-            if i == 1
+            if i <= 5
                 figure(4)
-                scatter(spanLocations,inducedVelocity)
+                plot(spanLocations,inducedVelocity)
                 title("Induced Velocity")
             end
 
-            if i == 1
+            if i <= 5
                 figure(5)
-                scatter(spanLocations,effectiveAOA)
+                plot(spanLocations,effectiveAOA)
                 title("Effective AOA")
             end
 
@@ -158,7 +158,7 @@ module NonlinearLiftingLine
             end
 
             # Check for convergence
-            if cl_difference_rms <= 1*10^-3 # see if the rms difference is small enough to be considered converged           
+            if cl_difference_rms <= 1*10^-5 # see if the rms difference is small enough to be considered converged           
                 break;
             end
 
