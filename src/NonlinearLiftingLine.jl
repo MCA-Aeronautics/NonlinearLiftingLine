@@ -38,7 +38,7 @@ module NonlinearLiftingLine
                  density = 1.225)
 
         # Defining some variables
-        maxIter = 500
+        maxIter = 50
         showConvergence = true
         numPanels = length(panels[:,1])
         nu = 1.48e-5;
@@ -102,11 +102,11 @@ module NonlinearLiftingLine
             #     title("Induced Velocity")
             # end
 
-            if i <= 5
-                figure(5)
-                plot(spanLocations,effectiveAOA)
-                title("Effective AOA")
-            end
+            # if i <= 5
+            #     figure(5)
+            #     plot(spanLocations,effectiveAOA)
+            #     title("Effective AOA")
+            # end
 
             # find the total circulation
             for j = 1:(numPanels)
