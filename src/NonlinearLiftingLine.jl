@@ -38,7 +38,7 @@ module NonlinearLiftingLine
                  density = 1.225)
 
         # Defining some variables
-        maxIter = 500
+        maxIter = 50
         showConvergence = true
         numPanels = length(panels[:,1])
         nu = 1.48e-5;
@@ -63,9 +63,17 @@ module NonlinearLiftingLine
         cm = zeros(numPanels)  # section moment coefficient
         converged = zeros(numPanels) # whether the iteration converged
 
+        # Calculating the chord
+        chord = zeros(numPanels,1)
+        for i = 1:numPanels
+            chord_lhs = panels[i,10] - panels[i,1]
+            chord_rhs = panels[i,7] - panels[i,4]
+            chord[i] = (chord_lhs + chord_rhs) / 2
+        end
+
         # Now we will create a loop that will converge to a circulation value that will be available
         # to be used to calculate our aerodyanmic coefficients and forces
-        for i = 1:maxIter + 1 # Maximum number of iterations to go through before giving up (to avoid an infinite loop)
+        for i = 1:maxIter # Maximum number of iterations to go through before giving up (to avoid an infinite loop)
 
             # Initializing the coefficient arrays on each iteration
             cl = zeros(numPanels) # section lift coefficient
@@ -79,58 +87,51 @@ module NonlinearLiftingLine
             # Calculate the induced velocity at the front of each horseshoe vortex (1/4 chord)
             inducedVelocity = calculateInducedVelocity(panels,GammaValues,"quarter chord")
 
-            # if i == 1
-            #     figure(2)
+            # Calculate the effective angle of attack for each airfoil
+            effectiveAOA = calculateEffectiveAlpha(freestream,inducedVelocity,anglesOfAttack) # multiplied by cosine of the angle of attack so that it becomes perpendicular to the freestream
+
+            # if i <= 5
+            #     figure(3)
             #     plot(spanLocations,GammaValues)
             #     title("Circulation Values")
             # end
 
-            # if i == 1
-            #     figure(3)
+            # if i <= 5
+            #     figure(4)
             #     plot(spanLocations,inducedVelocity)
-            #     title("Induced Velocities")
+            #     title("Induced Velocity")
             # end
 
-            # Calculate the effective angle of attack for each airfoil
-            effectiveAOA = calculateEffectiveAlpha(freestream,inducedVelocity,anglesOfAttack) # multiplied by cosine of the angle of attack so that it becomes perpendicular to the freestream
-
-            if i == 1
-                figure(4)
-                plot(spanLocations,effectiveAOA)
-                title("Effective AOA")
-            end
+            # if i <= 5
+            #     figure(5)
+            #     plot(spanLocations,effectiveAOA)
+            #     title("Effective AOA")
+            # end
 
             # find the total circulation
             for j = 1:(numPanels)
 
                 # accounting for the difference velocity at each airfoil
+                # FIXME: Why only in the x-direction?
                 localVelocity = sqrt(dot(freestream[j,:],[1,0,0])^2 + inducedVelocity[j]^2)
-                # We need to average the chords on either side of the panels
-                chord_lhs = panels[j,10] - panels[j,1]
-                chord_rhs = panels[j,7] - panels[j,4]
-                chord = (chord_lhs + chord_rhs) / 2
+                localVelocity = sqrt(freestream[j,1]^2 + (freestream[j,3] + inducedVelocity[j])^2)
 
-                localReynoldsNumber = localVelocity * chord / nu
+                localReynoldsNumber = localVelocity * chord[j] / nu
 
                 # Calculate the lift and drag coefficients for that angle for each airfoil
-                cl[j] = calculateCoefficients(airfoil[:,1],airfoil[:,2], effectiveAOA[j], localReynoldsNumber/chord, airfoilName);
+                cl[j] = calculateCoefficients(airfoil[:,1],airfoil[:,2], effectiveAOA[j], localReynoldsNumber/chord[j], airfoilName);
                 
                 #println("Iteration ",i," Panel ",j,". cl = ",cl[j])
 
                 # Use the coefficients to calculate the circulation about each airfoil. Not sure which one to use
-                circulation = 0.5 * norm(freestream[j,:]) * cl[j] * chord
+                #circulation = 0.5 * norm(freestream[j,:]) * cl[j] * chord[j]
+                circulation = 0.5 * norm(freestream[j,:]) * cl[j] * chord[j]
 
                 # update the GammaValues array
                 omega = 0.99
                 GammaValues[j] = omega*oldGammaValues[j] + (1-omega)*circulation[1]
 
             end
-
-            #if i == 1
-                figure(2)
-                plot(spanLocations,GammaValues)
-                title("Circulation Values")
-            #end
 
             # Defining the rms difference between the previous cl and current cl distributions
             cl_difference = cl .- cl_old
@@ -145,6 +146,8 @@ module NonlinearLiftingLine
                 clf()
                 plot(spanLocations,cl_VLM,label = "Linear Result",color = "green")
                 plot(spanLocations,cl,label = "Nonlinear Result",linestyle = "--",color = "orange",linewidth = 3)
+                # plot(spanLocations,cl_VLM.*chord./0.24,label = "Linear Result",color = "green")
+                # plot(spanLocations,cl.*chord./0.24,label = "Nonlinear Result",linestyle = "--",color = "orange",linewidth = 3)
                 xlabel("Spanwise Location (y/b)")
                 ylabel("Sectional Lift Coefficient")
                 title(string("Iteration ",i))
@@ -158,7 +161,7 @@ module NonlinearLiftingLine
             end
 
             # Check for convergence
-            if cl_difference_rms <= 1*10^-5 # see if the rms difference is small enough to be considered converged           
+            if cl_difference_rms <= 1*10^-4 # see if the rms difference is small enough to be considered converged           
                 break;
             end
 
@@ -167,12 +170,12 @@ module NonlinearLiftingLine
         end
 
         # Getting the results from the nonlinear solver
-        CL, cl, _ = calculateLift(density,freestream,panels,GammaValues); # Lift
+        CL, cL, _ = calculateLift(density,freestream,panels,GammaValues); # Lift
         CDi_near, _, _ = calculateInducedDrag(density,freestream,panels,GammaValues,cl); # Near-field induced drag
 
         CL, cl_VLM, cLSpanLocations_VLM = calculateLift(density,freestream,panels,GammaValues_VLM); # Lift
 
-        return CL, CDi_near, cl
+        return CL, CDi_near, cl, cLSpanLocations_VLM
 
     end
 

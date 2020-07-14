@@ -18,7 +18,7 @@ fourthCoordinate = [1/6, 0.000, 0.000];
 # thirdCoordinate  = [1.2, 1.0, 0.000];
 # fourthCoordinate = [0.2, 0.000, 0.000];
 
-numPanelsSpan = 100
+numPanelsSpan = 50
 numPanelsChord = 1 # Must be equal to 1
 numPanels = numPanelsSpan*numPanelsChord*2
 wingGeometry = generatePanels(firstCoordinate, secondCoordinate, thirdCoordinate, fourthCoordinate, numPanelsSpan, numPanelsChord)
