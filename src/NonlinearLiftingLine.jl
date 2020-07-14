@@ -38,7 +38,7 @@ module NonlinearLiftingLine
                  density = 1.225)
 
         # Defining some variables
-        maxIter = 50
+        maxIter = 500
         showConvergence = true
         numPanels = length(panels[:,1])
         nu = 1.48e-5;
@@ -54,7 +54,7 @@ module NonlinearLiftingLine
 
         # Initialize the gamma values
         GammaValues = GammaValues_VLM*1.0
-        #GammaValues = ones(numPanels,1)
+        #GammaValues = ones(numPanels,1)*0.01
 
         # Initializing the coefficient arrays
         cl = zeros(numPanels) # section lift coefficient
@@ -102,11 +102,11 @@ module NonlinearLiftingLine
             #     title("Induced Velocity")
             # end
 
-            # if i <= 5
-            #     figure(5)
-            #     plot(spanLocations,effectiveAOA)
-            #     title("Effective AOA")
-            # end
+            if i <= 5
+                figure(5)
+                plot(spanLocations,effectiveAOA)
+                title("Effective AOA")
+            end
 
             # find the total circulation
             for j = 1:(numPanels)
@@ -161,7 +161,7 @@ module NonlinearLiftingLine
             end
 
             # Check for convergence
-            if cl_difference_rms <= 1*10^-4 # see if the rms difference is small enough to be considered converged           
+            if cl_difference_rms <= 1*10^-5 # see if the rms difference is small enough to be considered converged           
                 break;
             end
 
