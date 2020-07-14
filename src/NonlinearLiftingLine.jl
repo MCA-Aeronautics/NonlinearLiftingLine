@@ -73,7 +73,7 @@ module NonlinearLiftingLine
 
         # Now we will create a loop that will converge to a circulation value that will be available
         # to be used to calculate our aerodyanmic coefficients and forces
-        for i = 1:maxIter + 1 # Maximum number of iterations to go through before giving up (to avoid an infinite loop)
+        for i = 1:maxIter # Maximum number of iterations to go through before giving up (to avoid an infinite loop)
 
             # Initializing the coefficient arrays on each iteration
             cl = zeros(numPanels) # section lift coefficient
