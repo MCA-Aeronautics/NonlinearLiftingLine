@@ -123,8 +123,9 @@ module NonlinearLiftingLine
                 
                 #println("Iteration ",i," Panel ",j,". cl = ",cl[j])
 
-                # Use the coefficients to calculate the circulation about each airfoil. Not sure which one to use
-                #circulation = 0.5 * norm(freestream[j,:]) * cl[j] * chord[j]
+                # Use the coefficients to calculate the circulation about each airfoil.
+                # When you define the local lift coefficient as cl = L / (q * S) and replace L with Kutta-Joukowski,
+                # you can simplify to the following expression. Remember that deltaX = chord.
                 circulation = 0.5 * norm(freestream[1,:]) * cl[j] * chord[j]
 
                 # update the GammaValues array
