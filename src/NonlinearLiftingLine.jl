@@ -112,7 +112,9 @@ module NonlinearLiftingLine
             for j = 1:(numPanels)
 
                 # accounting for the difference velocity at each airfoil
+                # FIXME: Why only in the x-direction?
                 localVelocity = sqrt(dot(freestream[j,:],[1,0,0])^2 + inducedVelocity[j]^2)
+                localVelocity = sqrt(freestream[j,1]^2 + (freestream[j,3] + inducedVelocity[j])^2)
 
                 localReynoldsNumber = localVelocity * chord[j] / nu
 
@@ -123,7 +125,7 @@ module NonlinearLiftingLine
 
                 # Use the coefficients to calculate the circulation about each airfoil. Not sure which one to use
                 #circulation = 0.5 * norm(freestream[j,:]) * cl[j] * chord[j]
-                circulation = 0.5 * norm(freestream[1,:]) * cl[j] * chord[j]
+                circulation = 0.5 * norm(freestream[j,:]) * cl[j] * chord[j]
 
                 # update the GammaValues array
                 omega = 0.99
