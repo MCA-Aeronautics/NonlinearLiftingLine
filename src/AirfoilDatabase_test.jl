@@ -191,8 +191,8 @@ for file in [:clfile, :cdfile, :cmfile]  # Iterate over each file
     
     # Generate scaled RBF interpolation function
 #     rbf_scaled, A = generate_RBF(Xp_scaled, val_scaled; zeta=zeta_gaus, sigmas=1.50)
-    #rbf_scaled, A = generate_RBF(Xp_scaled, val_scaled; zeta=zeta_gaus, sigmas=5.0)
-    #rbf(X) = valmin + (valmax - valmin)*rbf_scaled( (X.-Xmin)./ X_scaling )
+    rbf_scaled, A = generate_RBF(Xp_scaled, val_scaled; zeta=zeta_gaus, sigmas=5.0)
+    rbf(X) = valmin + (valmax - valmin)*rbf_scaled( (X.-Xmin)./ X_scaling )
     
     
     Xps[file] = Xp
@@ -209,3 +209,23 @@ testfile = :clfile
 
 println("True value:\t\t$(vals[testfile][xi])")
 println("RBF interp value:\t$(rbfs[testfile](Xps[testfile][xi]))")
+println(" ")
+
+# Running some tests of my own:
+info = [0, 1.0e6, 0.20, 9.0]
+value = rbfs[:clfile](info)
+println("Test Case:\tAoA = $(info[1])\tRe = $(info[2])\tMa = $(info[3])\tnCrit = $(info[4])")
+println("RBF Interp Value:\t$value")
+println()
+
+info = [1, 1.0e7, 0.22, 9.0]
+value = rbfs[:clfile](info)
+println("Test Case:\tAoA = $(info[1])\tRe = $(info[2])\tMa = $(info[3])\tnCrit = $(info[4])")
+println("RBF Interp Value:\t$value")
+println()
+
+info = [0, 1.0e6, 0.20, 9.0]
+value = rbfs[:clfile](info)
+println("Test Case:\tAoA = $(info[1])\tRe = $(info[2])\tMa = $(info[3])\tnCrit = $(info[4])")
+println("RBF Interp Value:\t$value")
+println()
