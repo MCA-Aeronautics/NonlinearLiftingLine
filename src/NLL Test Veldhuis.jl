@@ -123,12 +123,15 @@ pygui(true)
 
 CL, CDi, cl, spanLocations = NLL(sortedPanels,airfoil,"NACA642-015A",freestream)
 
+CL_VLM, CDi_near_VLM, cl_VLM, cd_near_VLM, spanLocations, GammaValues_VLM = VLM(panels,freestream)
+
 # Get the Delft VLM and experimental data
 data = CSV.read("/Users/markanderson/Box/FLOW-MCA/Lab Notebooks/2020-07/Veldhuis Propeller Data.csv")
 spancoords = convert(Array,data[1:end,1])
 unnormalizedLift = convert(Array,data[1:end,2])
 
 figure()
+plot(spanLocations./maximum(spanLocations),cl_VLM,label="VLM", color = "green", linestyle = "-", linewidth = 2)
 plot(spanLocations./maximum(spanLocations),cl,label="Strip Theory", color = "orange", linestyle = "--", linewidth = 3)
 plot(spancoords./maximum(spanLocations),unnormalizedLift,label="Veldhius Data", color = "black",marker = "o")
 xlim(0,1)
