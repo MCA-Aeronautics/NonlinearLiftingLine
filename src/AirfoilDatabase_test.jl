@@ -13,14 +13,14 @@ import JuliaDB
 jdb = JuliaDB
 
 # Database that will be used
-database_path = "/Users/markanderson/Desktop/data/practice_database/"
+database_path = "/Users/markanderson/Box/FLOW-MCA/Code/NonlinearLiftingLine/airfoil-data/eduardo"
 
 adb.new_database(database_path)
-CSV.read(joinpath(database_path, "index.csv"))
+#CSV.read(joinpath(database_path, "index.csv"))
 
 #---Creating the data
 
-airfoil_file = "/Users/markanderson/Desktop/data/naca0012.csv"  # Airfoil contour to read
+airfoil_file = "/Users/markanderson/Box/FLOW-MCA/Code/NonlinearLiftingLine/airfoil-data/NACA642-015A Coordinates.csv"  # Airfoil contour to read
 Re = 3e6                           # Reynolds number
 Ma = 0                           # Mach number
 alphas = [i for i in -30:1.0:30]    # Range of AOA to sweep
@@ -37,18 +37,18 @@ polar = ap.runXFOIL(x, y, Re; alphas=alphas,
 # ap.plot(polar; geometry=true, cdpolar=false);
 
 # Adding polar to database
-adb.new_entry(polar; database_path=database_path, airfoilname="NACA 0012")
+#adb.new_entry(polar; database_path=database_path, airfoilname="NACA 0012")
 
-CSV.read(joinpath(database_path, "index.csv"))
+#CSV.read(joinpath(database_path, "index.csv"))
 
-CSV.read(joinpath(database_path, "Cl", "NACA0012-Cl-re10000000-ma0p22-ncrit9p0-0.csv"))
+#CSV.read(joinpath(database_path, "Cl", "NACA0012-Cl-re10000000-ma0p22-ncrit9p0-0.csv"))
 
-doSweep = false
+doSweep = true
 if doSweep
     alphas = [i for i in -30:1.0:30]    # (deg) angle of attacks to sweep
-    Res = [i for i in 1e5:1e5:5e6] # Chord-based Reynolds numbers to sweep
-    Mas = [0]               # Mach numbers to sweep
-    ncrits = [9]                 # Ncrit to sweep
+    Re = [i for i in 1e5:1e5:5e6] # Chord-based Reynolds numbers to sweep
+    Ma= [0]               # Mach numbers to sweep
+    ncrit = [9]                 # Ncrit to sweep
     
     # Read airfoil conotur
     x, y = ap.readcontour(airfoil_file; header_len=1, delim=",")
@@ -166,7 +166,6 @@ for file in [:clfile, :cdfile, :cmfile]  # Iterate over each file
         
         for drow in eachrow(data) # Iterate over rows in the data
             this_Xp = Float64[ax != :alpha ? row[Symbol(adb.FIELD2_HEADER[ax])] : drow[1] for ax in rbf_axes]
-            println(row[Symbol(adb.FIELD2_HEADER[:re])])
             this_val = drow[2]
             push!(Xp, this_Xp)
             push!(val, this_val)
