@@ -21,8 +21,8 @@ CSV.read(joinpath(database_path, "index.csv"))
 #---Creating the data
 
 airfoil_file = "/Users/markanderson/Desktop/data/naca0012.csv"  # Airfoil contour to read
-Re = 10e6                           # Reynolds number
-Ma = 0.22                           # Mach number
+Re = 3e6                           # Reynolds number
+Ma = 0                           # Mach number
 alphas = [i for i in -30:1.0:30]    # Range of AOA to sweep
 
 # Read airfoil contour
@@ -46,12 +46,14 @@ CSV.read(joinpath(database_path, "Cl", "NACA0012-Cl-re10000000-ma0p22-ncrit9p0-0
 doSweep = false
 if doSweep
     alphas = [i for i in -30:1.0:30]    # (deg) angle of attacks to sweep
-    Res = [8e4, 1.5e6, 3e6, 5e6, 8e6, 1e7, 1.5e7] # Chord-based Reynolds numbers to sweep
-    Mas = [0, 0.15, 0.28]               # Mach numbers to sweep
-    ncrits = [14, 9, 4]                 # Ncrit to sweep
+    Res = [i for i in 1e5:1e5:5e6] # Chord-based Reynolds numbers to sweep
+    Mas = [0]               # Mach numbers to sweep
+    ncrits = [9]                 # Ncrit to sweep
     
     # Read airfoil conotur
     x, y = ap.readcontour(airfoil_file; header_len=1, delim=",")
+    println(x)
+    println(y)
     
     # -------------- RUN SWEEP ------------------------------------------------------
     for ncrit in ncrits
@@ -63,7 +65,7 @@ if doSweep
                 polar = ap.runXFOIL(x, y, Re; alphas=alphas,
                                               Mach=Ma,
                                               ncrit=ncrit,
-                                              verbose=true, 
+                                              verbose=false, 
                                               iter=100)
                 # Add polar to the database
                 adb.new_entry(polar; database_path=database_path, airfoilname="NACA 0012", warn=false)
@@ -164,6 +166,7 @@ for file in [:clfile, :cdfile, :cmfile]  # Iterate over each file
         
         for drow in eachrow(data) # Iterate over rows in the data
             this_Xp = Float64[ax != :alpha ? row[Symbol(adb.FIELD2_HEADER[ax])] : drow[1] for ax in rbf_axes]
+            println(row[Symbol(adb.FIELD2_HEADER[:re])])
             this_val = drow[2]
             push!(Xp, this_Xp)
             push!(val, this_val)
@@ -212,19 +215,19 @@ println("RBF interp value:\t$(rbfs[testfile](Xps[testfile][xi]))")
 println(" ")
 
 # Running some tests of my own:
-info = [0, 1.0e6, 0.20, 9.0]
+info = [0, 1.0e6, 0, 9.0]
 value = rbfs[:clfile](info)
 println("Test Case:\tAoA = $(info[1])\tRe = $(info[2])\tMa = $(info[3])\tnCrit = $(info[4])")
 println("RBF Interp Value:\t$value")
 println()
 
-info = [1, 1.0e7, 0.22, 9.0]
+info = [1, 3.0e6, 0, 9.0]
 value = rbfs[:clfile](info)
 println("Test Case:\tAoA = $(info[1])\tRe = $(info[2])\tMa = $(info[3])\tnCrit = $(info[4])")
 println("RBF Interp Value:\t$value")
 println()
 
-info = [0, 1.0e6, 0.20, 9.0]
+info = [0, 7.0e5, 0, 9.0]
 value = rbfs[:clfile](info)
 println("Test Case:\tAoA = $(info[1])\tRe = $(info[2])\tMa = $(info[3])\tnCrit = $(info[4])")
 println("RBF Interp Value:\t$value")
