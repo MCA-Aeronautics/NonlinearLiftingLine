@@ -277,10 +277,12 @@ module NonlinearLiftingLine
         end
 
         # Getting the results from the nonlinear solver
-        CL, cL, _ = calculateLift(density,freestream,panels,GammaValues); # Lift
+        #CL, cL, _ = calculateLift(density,freestream,panels,GammaValues); # Lift
         CDi_near, _, _ = calculateInducedDrag(density,freestream,panels,GammaValues,cl); # Near-field induced drag
 
-        CL, cl_VLM, cLSpanLocations_VLM = calculateLift(density,freestream,panels,GammaValues_VLM); # Lift
+        CL_VLM, cl_VLM, cLSpanLocations_VLM = calculateLift(density,freestream,panels,GammaValues_VLM); # Lift
+
+        CL = trapz(cLSpanLocations_VLM,cl)
 
         return CL, CDi_near, cl, cLSpanLocations_VLM
 
