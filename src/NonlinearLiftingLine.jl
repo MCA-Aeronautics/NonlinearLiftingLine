@@ -283,6 +283,7 @@ module NonlinearLiftingLine
         CL_VLM, cl_VLM, cLSpanLocations_VLM = calculateLift(density,freestream,panels,GammaValues_VLM); # Lift
 
         CL = trapz(cLSpanLocations_VLM,cl)
+        println("NLL CL = $CL")
 
         return CL, CDi_near, cl, cLSpanLocations_VLM
 
