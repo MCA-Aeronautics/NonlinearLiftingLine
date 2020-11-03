@@ -2,3 +2,13 @@ name = "NonlinearLiftingLine"
 uuid = "cf325f74-95e9-408e-a967-c66f4272e779"
 authors = ["Mark C. Anderson <anderson.mark.az@gmail.com>"]
 version = "0.1.0"
+
+[deps]
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+FLOWMath = "6cb5d3fb-0fe8-4cc2-bd89-9fe0b19a99d3"
+JuliaDB = "a93385a2-3734-596a-9a66-3cfbb77141e6"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+PyPlot = "d330b81b-6aea-500a-939a-2ce795aea3ee"
+VLMMCA = "8baf1d39-669d-4b9f-a3f4-ec4809193160"
+Xfoil = "19641d66-a62d-11e8-2441-8f57a969a9c4"
+makeAirfoil = "e67f8722-8940-478f-95ae-be8f1b226cb6"
