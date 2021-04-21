@@ -40,8 +40,8 @@ module NonlinearLiftingLine
     import JuliaDB
     jdb = JuliaDB
 
-    Pkg.add("Statistics")
-    Pkg.add("IterativeSolvers")
+    #Pkg.add("Statistics")
+    #Pkg.add("IterativeSolvers")
     import Statistics
     import IterativeSolvers
 
@@ -55,7 +55,7 @@ module NonlinearLiftingLine
 
         # Defining some variables
         maxIter = 1000
-        showConvergence = true
+        showConvergence = false
         numPanels = length(panels[:,1])
         nu = 1.48e-5;
         cl_old = zeros(numPanels);
@@ -136,7 +136,7 @@ module NonlinearLiftingLine
 
                 # Calculate the lift and drag coefficients for that angle for each airfoil
                 #cl[j] = calculateCoefficients(airfoil[:,1],airfoil[:,2], effectiveAOA[j], localReynoldsNumber/chord[j], airfoilName);
-                info = [effectiveAOA[j]*180/pi, localReynoldsNumber/chord[j], 0, 9.0]
+                info = [effectiveAOA[j]*180/pi, localReynoldsNumber, 0, 9.0]
                 cl[j] = rbfs[:clfile](info)
 
                 # println(info)
